@@ -6,7 +6,7 @@
 #include "hkcamera.h"
 #include <QDebug>
 #include "hkcamera.h"
-#include "connect_test.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -59,8 +59,6 @@ private:
     // 定义HWND 视频流句柄
     HWND hWnd1;
 
-    QUdpSocket* udpSocket;
-     QNetworkDatagram datagram;
 
 signals:
     void StartCamera();

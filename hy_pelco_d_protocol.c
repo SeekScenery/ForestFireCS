@@ -34,6 +34,24 @@ unsigned int edit_cfg_file_head_crc(HY_PTZ_DATA_PACK *pack)
   }
   return crc;
 }
+/******************************************************************************
+** 函数名称：ptz_udp_data_pack_a_crc
+** 功    能：协议总校验码计算
+**  @author：四川汇源光通信
+** 修改日志：2021-09-04
+******************************************************************************/
+unsigned int ptz_udp_data_pack_a_crc(HY_PTZ_DATA_PACK *pack)
+{
+  unsigned short int len = 0,len_count = 0;
+  unsigned int crc = 0;
+
+  len = sizeof(HY_PTZ_DATA_PACK) - 1 + pack->cmd_len;
+  for(len_count = 0; len_count < len; len_count++)
+  {
+    crc = crc + *(((unsigned char *)pack) + len_count);
+  }
+  return crc;
+}
 
 /******************************************************************************
 ** 函数名称：edit_cfg_file
@@ -100,13 +118,12 @@ void edit_cfg_file(unsigned char addr, char* data, unsigned char content)
   }
     
   p->cmd_len = len;
-  p->head_crc = ptz_data_pack_a_head_crc(p);
+  p->head_crc = edit_cfg_file_head_crc(p);
   if(len > 0){
     memcpy(p->cmd_data, data, len);
   }
   len1 =  sizeof(HY_PTZ_DATA_PACK) - 1 + len;
-  *((unsigned int *)(((unsigned char *)p) + len1)) =
-    ptz_udp_data_pack_a_crc(p);
+  *((unsigned int *)(((unsigned char *)p) + len1)) = ptz_udp_data_pack_a_crc(p);
   len1 = len1 + sizeof(int);
   *((unsigned char *)p + len1) = 0x16;
   len2 = (len1 + sizeof(char));
@@ -1644,7 +1661,6 @@ void auto_return_angle(unsigned char addr,unsigned char H_time,unsigned char L_t
     
   // 通过以太网/485/422接口发送
   //send_data(pelco_d_pack, sizeof(pelco_d_pack));
-
 }
 
 /******************************************************************************

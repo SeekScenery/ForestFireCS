@@ -37,7 +37,7 @@ FORMS += \
 INCLUDEPATH += $$PWD/include
 
 
-LIBS  += -LC:/Users/18387/Desktop/code_learning/changsha/interface/HKCamera/lib  -lGdiPlus \
+LIBS  += -L$$PWD/lib                                                             -lGdiPlus \
                                                                                  -lHCCore \
                                                                                  -lHCNetSDK \
                                                                                  -lPlayCtrl \

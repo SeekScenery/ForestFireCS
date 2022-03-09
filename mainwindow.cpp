@@ -57,30 +57,26 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(this, &MainWindow::StartCamera, HK_Camsera_4, &HKCamera::ForestDomePatrol);
 
-
-
-
-
 }
 
 
 
-void MainWindow::initSocket()
-{
-    udpSocket = new QUdpSocket();
-    udpSocket->bind(QHostAddress::LocalHost, 7755);
+//void MainWindow::initSocket()
+//{
+//    udpSocket = new QUdpSocket();
+//    udpSocket->bind(QHostAddress::LocalHost, 7755);
 
-    connect(udpSocket, &QUdpSocket::readyRead,
-            this, &MainWindow::readPendingDatagrams);
-}
+//    connect(udpSocket, &QUdpSocket::readyRead,
+//            this, &MainWindow::readPendingDatagrams);
+//}
 
-void MainWindow::readPendingDatagrams()
-{
-    while (udpSocket->hasPendingDatagrams()) {
+//void MainWindow::readPendingDatagrams()
+//{
+//    while (udpSocket->hasPendingDatagrams()) {
 //      datagram = udpSocket->receiveDatagram();
 //        processTheDatagram(datagram);
-    }
-}
+//    }
+//}
 
 
 MainWindow::~MainWindow()

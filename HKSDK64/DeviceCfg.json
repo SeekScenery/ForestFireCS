@@ -1,0 +1,39 @@
+{
+	"Devices":	[{
+			"ID":	0,
+			"SerialNumber":	"KC-2IR06AN20211103AACHJ01122228",
+			"ChannelNumber":	1,
+			"StartChannel":	1,
+			"AlarmInNum":	1,
+			"AlarmOutNum":	1,
+			"IPChanNum":	0,
+			"MirrorChanNum":	0,
+			"StartMirrorChanNo":	0,
+			"LocalNodeName":	"192.168.1.64",
+			"DeviceType":	44,
+			"DiskNum":	0,
+			"LoginUserName":	"admin",
+			"LoginUserPwd":	"cmr12345",
+			"DeviceIP":	"192.168.1.64",
+			"DeviceMultiIP":	"239.0.0.1",
+			"DevicePort":	8000,
+			"DeviceName":	"KC-2IR06AN",
+			"LoginMode":	0,
+			"Https":	0,
+			"Channels":	[{
+					"ChanID":	0,
+					"DeviceIndex":	0,
+					"ChanIndex":	0,
+					"ChanName":	"Camera1",
+					"Protocol":	2147483648,
+					"PicResolution":	0,
+					"PicQuality":	0,
+					"Enable":	1,
+					"PreviewMode":	0,
+					"PreviewProtocolType":	0,
+					"VideoCodingType":	0,
+					"StreamType":	1,
+					"LinkMode":	0
+				}]
+		}]
+}
