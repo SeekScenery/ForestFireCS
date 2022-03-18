@@ -1,4 +1,12 @@
 #include "hkcamera.h"
+//时间解析宏定义
+#define GET_YEAR(_time_)      (((_time_)>>26) + 2000)
+#define GET_MONTH(_time_)     (((_time_)>>22) & 15)
+#define GET_DAY(_time_)       (((_time_)>>17) & 31)
+#define GET_HOUR(_time_)      (((_time_)>>12) & 31)
+#define GET_MINUTE(_time_)    (((_time_)>>6)  & 63)
+#define GET_SECOND(_time_)    (((_time_)>>0)  & 63)
+#include <fstream>
 
 HKCamera::HKCamera(int index, HWND handle, QObject *parent)
     :QObject(parent), IPIndex(index), Handle(handle)
@@ -108,6 +116,66 @@ bool HKCamera::RealPlay()
     return true;
 }
 
+//报警回调函数  注册回调函数，接收设备报警消息等
+bool HKCamera::CALLBACK MessageCallBack(LONG lCommand ,void *pUser)
+{
+    switch (lCommand)
+    {
+    case COMM_FIREDETECTION_ALARM: //火点检测报警
+    {
+        NET_DVR_ALARMER *pAlarmInfo = {};   // 必须以指针方式
+        &pAlarmInfo->sDeviceIP ;
+
+        NET_DVR_FIREDETECTION_ALARM  struFireAlarm = {};
+        //将pAlarmInfo中的数据拷贝到struFireAlarm
+        memcpy(&struFireAlarm, pAlarmInfo, sizeof(NET_DVR_FIREDETECTION_ALARM));
+
+
+
+
+//         typedef BOOL(CALLBACK *MSGCallBack_V31)();
+
+        //记录当前时间结构体
+        NET_DVR_TIME struAbsTime = {0};
+        struAbsTime.dwYear = GET_YEAR( struFireAlarm.dwAbsTime);
+        struAbsTime.dwMonth = GET_MONTH( struFireAlarm.dwAbsTime);
+        struAbsTime.dwDay = GET_DAY( struFireAlarm.dwAbsTime);
+        struAbsTime.dwHour = GET_HOUR( struFireAlarm.dwAbsTime);
+        struAbsTime.dwMinute = GET_MINUTE( struFireAlarm.dwAbsTime);
+        struAbsTime.dwSecond = GET_SECOND( struFireAlarm.dwAbsTime);
+
+        //保存热成像报警抓拍的图片，pBuffer热成像图片数据指针，缓冲区保存热成像的图片数据
+        if (struFireAlarm.pBuffer != nullptr)
+        {
+            //创建文件夹
+            char cFilename[256] = {0};
+            HANDLE hFile;
+            DWORD dwReturn;
+
+            hFile = CreateFile(cFilename,GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+
+        }
+    }
+    break;
+
+    default:
+        printf("其他报警，报警信息类型: %d\n", lCommand);
+        break;
+    }
+
+    return TRUE;
+}
+
+
+//注册回调函数，接收设备报警消息等
+ bool HKCamera::SetDVRmessageCallBack()
+ {
+     bool flag ;
+     NET_DVR_SetDVRMessageCallBack_V31(CALLBACK MessageCallBack(),NULL);
+
+ }
+
+
 Mat HKCamera::GrabImage()
 {
     // 设置图片大小 和 质量
@@ -142,6 +210,7 @@ Mat HKCamera::GrabImage()
     delete[] PicBuffer;
     return img;
 }
+
 
 void HKCamera::ForestDomePatrol()
 {

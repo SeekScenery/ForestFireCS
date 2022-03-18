@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>130</x>
       <y>390</y>
       <width>81</width>
       <height>31</height>
@@ -66,7 +66,7 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -720,6 +720,19 @@
      </item>
     </layout>
    </widget>
+   <widget class="QPushButton" name="rechengxiang">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>400</y>
+      <width>80</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>热成像布防</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -727,7 +740,7 @@
      <x>0</x>
      <y>0</y>
      <width>690</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

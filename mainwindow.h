@@ -41,6 +41,10 @@ private slots:
 
     void on_Zoom_Out_Button_clicked();
 
+    void on_pushButton_2_clicked();
+
+    void on_rechengxiang_clicked();
+
 private:
     Ui::MainWindow *ui;
     bool ReturnState;

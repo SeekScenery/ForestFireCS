@@ -27,6 +27,10 @@ public:
     bool RealPlay();
     Mat GrabImage();
 
+    //报警回调函数
+     bool SetDVRmessageCallBack();
+    bool CALLBACK MessageCallBack(LONG lCommand , void *pUser);
+
 public slots:
     void ForestDomePatrol();
     void test();
@@ -34,6 +38,7 @@ public slots:
 
 public:
     HKMove *DomeCameraMove;
+    HKMove *Rechengxiang;
 
 private:
     // 设备ID

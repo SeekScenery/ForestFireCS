@@ -48,6 +48,7 @@ bool Alg::YoloDetect(Mat &SrcImg, vector<YoloOutput> &DetectResult)
 //	blobFromImage(netInputImg, blob, 1 / 255.0, cv::Size(netWidth, netHeight), cv::Scalar(104, 117,123), true, false);
     //如果在其他设置没有问题的情况下但是结果偏差很大，可以尝试下用下面两句语句
     blobFromImage(netInputImg, blob, 1 / 255.0, cv::Size(netWidth, netHeight), cv::Scalar(0, 0,0), true, false);
+
     //blobFromImage(netInputImg, blob, 1 / 255.0, cv::Size(netWidth, netHeight), cv::Scalar(114, 114,114), true, false);
     YoloNet.setInput(blob);
     std::vector<cv::Mat> netOutputImg;
@@ -157,7 +158,7 @@ void Alg::YoloDrawAnomaly(Mat &img, YoloOutput result)
     left = result.box.x;
     top = result.box.y;
 
-    rectangle(img, result.box, DrawColor[result.id], 2, 8);
+    cv::rectangle(img, result.box, DrawColor[result.id], 2, 8);
 
     string label = className[result.id] +":" + to_string(result.confidence);
     int baseLine;

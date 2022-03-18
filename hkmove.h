@@ -44,7 +44,7 @@ public:
     void Zoom_IN_end();
     void Zoom_OUT_end();
 
-    // 云台巡检
+    // 球机云台巡检
     PTZInfo Get_PTZPOS(); // 获取云台位置    参数
     void SetPreset(DWORD);             //设置预置点
     void ClearPreset(DWORD);          // 删除指定预置点
@@ -61,6 +61,11 @@ public:
     void StopSeq(BYTE); // 停止巡检
 
     void ClearPTZConfig();
+
+    //热成像检测
+    void GetSTDAbility(LONG UserId);   //热成像是否支持配置的火点检测参数能力
+    void SetFireDetection(LONG UserId);   //设置火点检测参数
+
 private:
     LONG UserId;
     LONG RealPlayHandle;

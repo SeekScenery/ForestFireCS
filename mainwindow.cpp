@@ -145,3 +145,9 @@ void MainWindow::on_Zoom_Out_Button_clicked()
     HK_Camsera_4->DomeCameraMove->Zoom_OUT_start();
     HK_Camsera_4->DomeCameraMove->Zoom_OUT_end();
 }
+
+void MainWindow::on_rechengxiang_clicked()
+{
+    HK_Camsera_2->Rechengxiang->GetSTDAbility(2);
+    HK_Camsera_2->MessageCallBack();
+}

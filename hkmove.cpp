@@ -313,4 +313,56 @@ void HKMove::ClearPTZConfig()
     }
 }
 
+
+//获取热成像火点检测参数
+void HKMove::GetSTDAbility(LONG UserId)
+{
+
+    //火点检测参数配置结构体。
+    NET_DVR_FIREDETECTION_CFG struFireCfg = {};
+
+
+    NET_DVR_STD_ABILITY StruStdAbility={};
+    StruStdAbility.dwOutSize = 1;
+    StruStdAbility.dwOutSize =sizeof ( struFireCfg);
+
+    //获取火点检测配置能力  是否支持配置的火点检测参数能力
+    if(! NET_DVR_GetSTDAbility(UserId,NET_DVR_GET_FIREDETECTION_CAPABILITIES,&StruStdAbility))
+    {
+         qDebug()<<" NET_DVR_GetSTDAbility get error"<<NET_DVR_GetLastError();
+    }
+}
+
+
+//设置火点检测参数
+void HKMove::SetFireDetection(LONG UserId)
+{
+    NET_DVR_FIREDETECTION_CFG struFireCfg = {};
+//     LONG m_lChannel = 1;
+//    struFireCfg.dwSize= sizeof (m_lChannel); //结构体大小
+    struFireCfg.byEnabled =1;
+    struFireCfg.bySensitivity = 80;     //检测灵敏度
+    struFireCfg.byFireComfirmTime = 3;  //发现火点等待时间
+    struFireCfg.byDetectionMode  =0;   //0多帧  1单帧
+    struFireCfg.byFireFocusMode = 0;   // 火点聚焦模式：0~自动模式,1~ 巡航模式。
+    struFireCfg.byApplicationSceneMode = 1;  //森林防火
+    struFireCfg.dwInstallationHeight =2;    //按照高度
+    struFireCfg.byFireSourceDetection = 0;  //火点搜索模式：0- 动态火点 ，1- 吸烟模式
+    struFireCfg.bySmokeAuxiliaryDetectionEnabled =1; //烟雾辅助判断启用使能，检测模式是二次判别时生效: 0-否， 1-是
+
+    //配置 NET_DVR_SetSTDConfig 输入输出参数结构体。
+    NET_DVR_STD_CONFIG struStdCfg = {};
+     LONG m_lChannel = 1;
+    struStdCfg.dwOutSize = sizeof (struFireCfg);
+    struStdCfg.lpCondBuffer = &m_lChannel;
+    struStdCfg.lpOutBuffer =  &struFireCfg;
+
+    if(!NET_DVR_SetSTDConfig(UserId,NET_DVR_SET_FIREDETECTION,&struStdCfg))
+    {
+
+        qDebug()<<" NET_DVR_SetSTDConfig set fire_detection error"<<NET_DVR_GetLastError();
+    }
+
+}
+
 // 球机的巡检流程
